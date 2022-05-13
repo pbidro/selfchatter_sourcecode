@@ -6,6 +6,9 @@ import {
   query,
   orderBy,
   addDoc,
+  deleteDoc,
+  doc,
+  setDoc,
 } from 'firebase/firestore'
 
 export default createStore({
@@ -47,7 +50,23 @@ export default createStore({
         console.log(objeto)
         const db = getFirestore();
         await addDoc(collection(db, "mensajes"), objeto);
-        commit()
+        commit
+      }
+    },
+    async delMessage(commit,objeto) {
+      if (objeto != "") {
+        console.log(objeto)
+        const db = getFirestore();
+        await deleteDoc(doc(db, "mensajes", objeto));
+        commit
+      }
+    },
+    async editMessage(commit,objeto) {
+      if (objeto != "") {
+        console.log(objeto)
+        const db = getFirestore();
+        await setDoc(doc(db, "mensajes", objeto[0]), objeto[1]);
+        commit
       }
     },
 

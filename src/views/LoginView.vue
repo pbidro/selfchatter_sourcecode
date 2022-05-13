@@ -5,6 +5,8 @@
     <p>password: <input v-model="user.password" /></p>
     <button @click="ingresar">ingresar</button>
   </div>
+      <h3>¿no tienes cuenta?<router-link to="/register"> haz click aquí </router-link> </h3>
+
 </template>
 
 <script>

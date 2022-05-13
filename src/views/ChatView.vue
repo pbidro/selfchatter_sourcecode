@@ -124,10 +124,7 @@
 <script  setup>
 //Importación de librerias de firebase
 import {
-  getFirestore,
-  deleteDoc,
-  doc,
-  setDoc,
+  getFirestore
 } from "firebase/firestore";
 import { mapActions,mapState } from "vuex";
 
@@ -163,7 +160,7 @@ export default {
 
   methods: {
 
-    ...mapActions(["instanceFirestore","addMessage", "getMessages"]),
+    ...mapActions(["instanceFirestore","addMessage", "getMessages","delMessage","editMessage"]),
     initFirestore() {
       this.instanceFirestore(getFirestore);
     },
@@ -174,6 +171,7 @@ export default {
         console.log(objeto)
         this.$store.dispatch("addMessage", objeto);
         ElMessage({ message: "Mensaje enviado", type: "success" });
+        this.newMessage="";
       } else {
         ElMessage({
           message: "Mensaje no puede estar en blanco",
@@ -184,8 +182,7 @@ export default {
 
     //eliminar elemenntos de firestore utilizando el identificador iterado
     async delMessage(Identifier) {
-      const db = getFirestore();
-      await deleteDoc(doc(db, "mensajes", Identifier));
+      this.$store.dispatch("delMessage", Identifier);
       ElMessage({ message: "Mensaje eliminado", type: "success" });
     },
 
@@ -196,9 +193,9 @@ export default {
 
     //editar elementos de firestore utilizando el identificador iterado
     async editFireStoreMessage(Identifier, objeto) {
-      const db = getFirestore();
-     await setDoc(doc(db, "mensajes", Identifier), objeto);
-    },
+        this.$store.dispatch("editMessage",[Identifier,objeto]);
+      ElMessage({ message: "Mensaje editado", type: "success" });
+},
   },
 
   created() {

@@ -20,7 +20,7 @@ export default {
       const { email, password } = this.user;
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth, email, password);
-      this.$router.push("/chat");
+      this.$router.push("/"); 
     },
   },
 };

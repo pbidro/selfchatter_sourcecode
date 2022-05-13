@@ -23,7 +23,8 @@ const routes = [
   {
     path: '/chat',
     name: 'chat',
-    component: () => import('../views/ChatView.vue')
+    component: () => import('../views/ChatView.vue'),
+    meta: { authRequired: true }
   }
 ]
 
@@ -31,29 +32,26 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
-/*
 import { getAuth } from "firebase/auth";
 
 router.beforeEach((to, from, next) => {
+console.log('pase por el before each')
   const { currentUser } = getAuth()
   const { meta: { authRequired } } = to
   if (currentUser && authRequired) {
-    console.log(`${currentUser} y ${authRequired} redirigir a next`)
+    console.log(currentUser)
+    console.log(`cu: ${currentUser} y ar: ${authRequired} redirigir a next`)
     next()
   } else if (!currentUser && authRequired) {
-    console.log(`${currentUser} y ${authRequired} redirigir a register`)
-    next("/register")
-  }
-  else if (currentUser && !authRequired) {
-    console.log(`${currentUser} y ${authRequired} redirigir a home`)
-    next("/")
+    console.log(currentUser)
+    console.log(`cu: ${currentUser} y ar: ${authRequired} redirigir a register`)
+    next("/login")
   }
   else {
-    console.log(`${currentUser} y ${authRequired} redirigir a nextpage`)
+    console.log(currentUser)
+    console.log(`cu: ${currentUser} y ar:${authRequired} redirigir a nextpage`)
     next()
   }
 })
-*/
 
 export default router
